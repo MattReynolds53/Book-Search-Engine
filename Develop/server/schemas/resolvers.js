@@ -2,7 +2,7 @@ const { AuthenticationError } = require('apollo-server-express');
 const { User, Book } = require('../models');
 const { signToken } = require('../utils/auth');
 
-const resolver {
+const resolver = {
 
     Query: {
         // get a single user by either their id or their username
@@ -10,8 +10,7 @@ const resolver {
         user: async (parent, args, context) => {
             return User.findOne({ username, _id }).populate('books');
         }
-    
-    }
+    },
 
 
       Mutation: {
@@ -32,7 +31,7 @@ const resolver {
             const token = signToken(user);
       
             return { token, user };
-            }
+            },
 
             // save a book to a user's `savedBooks` field by adding it to the set (to prevent duplicates)
             savedBook: async (parent, { book }, context) => {
