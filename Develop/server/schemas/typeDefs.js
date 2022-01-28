@@ -13,28 +13,20 @@ const typeDefs = gql`
     _id: ID
     authors: String
     descriptions: String!
-    bookId: String!
+    bookId: ID!
     image: String
     link: String
     title: String!
   }
 
   type Query {
-    
+    user(_id: ID!): User
   }
 
   type Mutation {
-  
-  }
-
-  type Query {
-    tech: [Tech]
-    matchups(_id: String): [Matchup]
-  }
-
-  type Mutation {
-    createMatchup(tech1: String!, tech2: String!): Matchup
-    createVote(_id: String!, techNum: Int!): Matchup
+    loginUser(email: String!, password: String!): Auth
+    savedBook(bookId: ID!): Book
+    removeBook(bookId: ID!): Book
   }
 `;
 
