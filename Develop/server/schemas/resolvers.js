@@ -7,7 +7,7 @@ const resolver = {
     Query: {
         // get a single user by either their id or their username
         // How do I know when to use context and when to desctructure args?
-        user: async (parent, args, context) => {
+        me: async (parent, args, context) => {
             return User.findOne({ username, _id }).populate('books');
         }
     },
