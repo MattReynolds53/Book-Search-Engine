@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
-
+import { useQuery, useMutation } from '@apollo/client';
 import { getMe, deleteBook } from '../utils/API';
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
+  const userData = useQuery(GET_ME, {
+    fetchPolicy: "no-cache"
+  });
+
+
   const [userData, setUserData] = useState({});
+  
 
   // use this to determine if `useEffect()` hook needs to run again
   const userDataLength = Object.keys(userData).length;
@@ -39,6 +45,9 @@ const SavedBooks = () => {
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    const [removeBook, { error }] = useMutation(REMOVE_BOOK);
+    // How do I work this in so I can delete the deleteBook function below? the other file from the mini project does not have this code in the try/catch
 
     if (!token) {
       return false;
