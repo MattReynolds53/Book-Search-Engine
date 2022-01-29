@@ -46,15 +46,15 @@ const SavedBooks = () => {
   const handleDeleteBook = async (bookId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-    const [removeBook, { error }] = useMutation(REMOVE_BOOK);
     // How do I work this in so I can delete the deleteBook function below? the other file from the mini project does not have this code in the try/catch
-
+    
     if (!token) {
       return false;
     }
-
+    
     try {
-      const response = await deleteBook(bookId, token);
+      const [removeBook, { error }] = useMutation(REMOVE_BOOK);
+      // const response = await deleteBook(bookId, token);
 
       if (!response.ok) {
         throw new Error('something went wrong!');

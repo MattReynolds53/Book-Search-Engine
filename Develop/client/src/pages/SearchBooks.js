@@ -64,10 +64,10 @@ const SearchBooks = () => {
       return false;
     }
 
-    const [saveBook, { error }] = useMutation(SAVE_BOOK);
-
+    
     try {
-      const response = await saveBook(bookToSave, token);
+      const [saveBook, { error }] = useMutation(SAVE_BOOK);
+      // const response = await saveBook(bookToSave, token);
 
       if (!response.ok) {
         throw new Error('something went wrong!');
