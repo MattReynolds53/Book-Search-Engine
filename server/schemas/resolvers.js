@@ -8,7 +8,7 @@ const resolvers = {
     // How do I know when to use context and when to desctructure args?
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({}).populate("books");
+        return User.findById(context.user._id).populate("savedBooks");
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -25,6 +25,8 @@ const resolvers = {
     // login a user, sign a token, and send it back (to client/src/components/LoginForm.js)
     //loginUser
     loginUser: async (parent, { email, password }) => {
+      console.log(email)
+      console.log(password)
       const user = await User.findOne({ email });
 
       if (!user) {
@@ -45,16 +47,19 @@ const resolvers = {
     // save a book to a user's `savedBooks` field by adding it to the set (to prevent duplicates)
     //savedBook
     //See if book works for the deconstructed args
-    savedBook: async (parent, { book }, context) => {
+    saveBook: async (parent, { book }, context) => {
+      console.log(context)
+      console.log(book)
       if (context.user) {
         // const book = await Book.create({
         //   bookId,
         //   title,
         //   author,
         // });
+        
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { books: book._id } },
+          { $addToSet: { savedBooks: book } },
           { new: true }
         );
 
