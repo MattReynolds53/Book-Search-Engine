@@ -6,12 +6,24 @@ import SavedBooks from './pages/SavedBooks';
 import Navbar from './components/Navbar';
 
 const client = new ApolloClient({
-  uri: '/graphql',
+  // InMemoryCache() should take the place of the subsequent code. Much easier to implement.
   cache: new InMemoryCache(),
+  uri: '/graphql',
+  // request: (operation) => {
+  //   const token = localStorage.getItem('id_token');
+    
+  //   operation.setContext({
+  //     headers: {
+  //       authorization: token ? `Bearer ${token}` : '',
+  //     },
+  //   });
+  // },
 });
 
+//Basically wrap your <Router> in the ApolloProvider
 function App() {
   return (
+    <ApolloProvider client={client}>
     <Router>
       <>
         <Navbar />
@@ -22,6 +34,7 @@ function App() {
         </Switch>
       </>
     </Router>
+    </ApolloProvider>
   );
 }
 
